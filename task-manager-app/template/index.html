@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Task Manager</title>
+
+<style>
+
+body{
+font-family:Arial;
+background:#eef2f7;
+margin:0;
+padding:0;
+}
+
+.container{
+width:650px;
+margin:60px auto;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 8px 20px rgba(0,0,0,0.1);
+}
+
+h1{
+text-align:center;
+color:#333;
+}
+
+form{
+display:flex;
+margin-bottom:25px;
+}
+
+input{
+flex:1;
+padding:12px;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+button{
+padding:12px 20px;
+margin-left:10px;
+background:#28a745;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
+button:hover{
+background:#218838;
+}
+
+.task{
+background:#f9f9f9;
+padding:15px;
+border-radius:5px;
+margin-bottom:10px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.status{
+font-size:12px;
+padding:4px 8px;
+border-radius:4px;
+margin-left:10px;
+}
+
+.pending{
+background:#ffc107;
+color:black;
+}
+
+.completed{
+background:#28a745;
+color:white;
+}
+
+.actions a{
+text-decoration:none;
+padding:6px 10px;
+margin-left:5px;
+border-radius:4px;
+color:white;
+font-size:13px;
+}
+
+.complete{
+background:#007bff;
+}
+
+.delete{
+background:#dc3545;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Team Task Manager</h1>
+
+<form method="POST">
+<input type="text" name="task" placeholder="Enter new task..." required>
+<button type="submit">Add Task</button>
+</form>
+
+{% for task in tasks %}
+
+<div class="task">
+
+<div>
+
+<strong>{{task.task_name}}</strong>
+
+<span class="status 
+{% if task.status == 'Pending' %}pending{% else %}completed{% endif %}">
+{{task.status}}
+</span>
+
+<br>
+<small>Created: {{task.created_at}}</small>
+
+</div>
+
+<div class="actions">
+
+{% if task.status == 'Pending' %}
+<a class="complete" href="/complete/{{task.id}}">Complete</a>
+{% endif %}
+
+<a class="delete" href="/delete/{{task.id}}">Delete</a>
+
+</div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>
